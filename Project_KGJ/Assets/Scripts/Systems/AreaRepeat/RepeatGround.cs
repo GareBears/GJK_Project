@@ -8,25 +8,27 @@ public class RepeatGround : MonoBehaviour
     private float startPosz;
     private Vector3 startPos;
 
+    GameManager gameManager;
+
     // Start is called before the first frame update
     void Start()
     {
         startPos = transform.position;
         moveDeduct = 20;
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - moveDeduct * Time.deltaTime);
-        if (transform.position.z < startPos.z - 50)
+        if (gameManager.gameIsRunning)
         {
-            transform .position = startPos;
+            transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - moveDeduct * Time.deltaTime);
+            if (transform.position.z < startPos.z - 50)
+            {
+                transform.position = startPos;
+            }
         }
-    }
-
-    public void SpeedUp()
-    {
-        moveDeduct = moveDeduct + 10;
+        
     }
 }

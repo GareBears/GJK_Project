@@ -4,24 +4,33 @@ using UnityEngine;
 
 public class ObstacleSpawn : MonoBehaviour
 {
-    public bool canSpawn;
+    private bool canSpawn;
     public GameObject[] obstacles;
     private float spawnPos;
+    private float spawnAllowance;
+
+    GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
         canSpawn = true;
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-     
-        if (canSpawn == true)
+        if (gameManager.gameIsRunning)
         {
-            StartCoroutine(SpawnStuff());
+            spawnAllowance = Random.Range(0, 4);
+
+            if (canSpawn == true)
+            {
+                StartCoroutine(SpawnStuff());
+            }
         }
+        
     }
 
     public IEnumerator SpawnStuff()
@@ -30,7 +39,7 @@ public class ObstacleSpawn : MonoBehaviour
         int obstacleIndex = Random.Range(0, obstacles.Length);
         spawnPos = Random.Range(0, 3);
         SpawnOb1(obstacleIndex);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(spawnAllowance);
         canSpawn = true;
     }
 

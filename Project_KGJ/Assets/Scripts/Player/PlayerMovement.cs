@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isGrounded;
     public float XValue;
     private CharacterController characControl;
+    private GameManager gameManager;
 
     private float y;
     private float x;
@@ -28,48 +29,50 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //transform.position = Vector3.zero;
         characControl = GetComponent<CharacterController>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         life = 3;
     }
 
     // Update is called once per frame
     void Update()
     {
-        MoveLeft = Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow);
-        MoveRight = Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow);
-        MoveUp = Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow);
-        if (MoveLeft)
+        if (gameManager.gameIsRunning == true)
         {
-            if(m_Side == SIDE.Mid)
+            MoveLeft = Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow);
+            MoveRight = Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow);
+            MoveUp = Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow);
+            if (MoveLeft)
             {
-                NewXPos = -XValue;
-                m_Side = SIDE.Left;
+                if (m_Side == SIDE.Mid)
+                {
+                    NewXPos = -XValue;
+                    m_Side = SIDE.Left;
+                }
+                else if (m_Side == SIDE.Right)
+                {
+                    NewXPos = 0;
+                    m_Side = SIDE.Mid;
+                }
             }
-            else if(m_Side == SIDE.Right)
+            else if (MoveRight)
             {
-                NewXPos = 0;
-                m_Side = SIDE.Mid;
+                if (m_Side == SIDE.Mid)
+                {
+                    NewXPos = XValue;
+                    m_Side = SIDE.Right;
+                }
+                else if (m_Side == SIDE.Left)
+                {
+                    NewXPos = 0;
+                    m_Side = SIDE.Mid;
+                }
             }
+            Vector3 moveVector = new Vector3(x - transform.position.x, y * Time.deltaTime, 0);
+            x = Mathf.Lerp(x, NewXPos, Time.deltaTime * SpeedDodge);
+            characControl.Move(moveVector);
+            Jump();
         }
-        else if (MoveRight)
-        {
-            if (m_Side == SIDE.Mid)
-            {
-                NewXPos = XValue;
-                m_Side = SIDE.Right;
-            }
-            else if (m_Side == SIDE.Left)
-            {
-                NewXPos = 0;
-                m_Side = SIDE.Mid;
-            }
-        }
-        Vector3 moveVector = new Vector3(x - transform.position.x, y * Time.deltaTime, 0);
-        x = Mathf.Lerp(x, NewXPos, Time.deltaTime * SpeedDodge);
-        //characControl.Move((NewXPos - transform.position.x) * Vector3.right);
-        characControl.Move(moveVector);
-        Jump();
     }
     
     public void Jump()
@@ -88,8 +91,9 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter(Collider other)
     {
+        Debug.Log(life);
         life = life - 1;
     }
 }
