@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class Obstacles : MonoBehaviour
 {
-    public float moveDeduct;
+    public float moveDeduct = 20f;
     private float playerPosZ;
     public float despawnRange;
     private GameObject player;
+    public float speedUp = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        moveDeduct = 20;
+        //moveDeduct = 20;
     }
     public void Awake()
     {
+        //moveDeduct = speedUp;
         player = GameObject.Find("Player");
         playerPosZ = player.transform.position.z;
         despawnRange = playerPosZ - 10;
@@ -24,7 +26,6 @@ public class Obstacles : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - moveDeduct * Time.deltaTime);
         
         if (transform.position.z < despawnRange)
@@ -33,8 +34,8 @@ public class Obstacles : MonoBehaviour
         }
     }
 
-    public void SpeedUp(int speed)
+    public void SpeedUp(float speed)
     {
-        moveDeduct = speed;
+        moveDeduct = moveDeduct + speed;
     }
 }

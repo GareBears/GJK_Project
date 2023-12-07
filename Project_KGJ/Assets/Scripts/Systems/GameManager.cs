@@ -21,7 +21,8 @@ public class GameManager : MonoBehaviour
     public TMP_Text text;
     public TMP_Text scoretext;
 
-    public GameObject Obstacle;
+    public GameObject obstacle;
+    GameObject prefabObject; 
 
     // Start is called before the first frame update
     void Start()
@@ -29,8 +30,12 @@ public class GameManager : MonoBehaviour
         player = GameObject.Find("Player");
         playerMove = player.GetComponent<PlayerMovement>();
         repeatGround = GameObject.Find("Ground").GetComponent<RepeatGround>();
-        obstacles = Obstacle.GetComponent<Obstacles>();
+        obstacles = obstacle.GetComponent<Obstacles>();
         score = 0;
+        if (obstacles.moveDeduct > 20)
+        {
+            obstacles.moveDeduct = 20;
+        }
     }
 
     // Update is called once per frame
@@ -54,20 +59,25 @@ public class GameManager : MonoBehaviour
             text.text = score.ToString();
             TimeSpan time = TimeSpan.FromSeconds(currentTime);
 
-            if (score > 20)
+            if (score == 20)
             {
-                SpeedUp();
+                SpeedUp(.25f);
+            }
+            if (score == 30)
+            {
+                SpeedUp(.25f);
+            }
+            if (score == 40)
+            {
+                SpeedUp(.25f);
             }
 
         }
     }
 
-    public void SpeedUp()
+    public void SpeedUp(float speed)
     {
-        if (score > 10)
-        {
-            repeatGround.SpeedUp(50);
-            obstacles.SpeedUp(50);
-        }
+        repeatGround.SpeedUp(speed);
+        obstacles.SpeedUp(speed);
     }
 }

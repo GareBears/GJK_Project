@@ -21,16 +21,15 @@ public class ObstacleSpawn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameManager.gameIsRunning)
+        if (gameManager.gameIsRunning == true)
         {
-            spawnAllowance = Random.Range(0, 4);
+            spawnAllowance = Random.Range(0, 3);
 
             if (canSpawn == true)
             {
                 StartCoroutine(SpawnStuff());
             }
         }
-        
     }
 
     public IEnumerator SpawnStuff()

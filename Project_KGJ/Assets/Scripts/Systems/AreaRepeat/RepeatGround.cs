@@ -21,7 +21,7 @@ public class RepeatGround : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameManager.gameIsRunning)
+        if (gameManager.gameIsRunning == true)
         {
             transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - moveDeduct * Time.deltaTime);
             if (transform.position.z < startPos.z - 50)
@@ -31,8 +31,8 @@ public class RepeatGround : MonoBehaviour
         }
     }
 
-    public void SpeedUp(int speed)
+    public void SpeedUp(float speed)
     {
-        moveDeduct = speed;
+        moveDeduct = moveDeduct + speed;
     }
 }

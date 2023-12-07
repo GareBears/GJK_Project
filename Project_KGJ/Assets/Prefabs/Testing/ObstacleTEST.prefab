@@ -110,5 +110,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e902f22603c9e4d4d94b06a77349fb41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveDeduct: 0
+  moveDeduct: 20
   despawnRange: 0
+  speedUp: 20.25
