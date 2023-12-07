@@ -32,4 +32,9 @@ public class Obstacles : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    public void SpeedUp(int speed)
+    {
+        moveDeduct = speed;
+    }
 }

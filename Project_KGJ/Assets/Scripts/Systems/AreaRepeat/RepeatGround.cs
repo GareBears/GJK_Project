@@ -29,6 +29,10 @@ public class RepeatGround : MonoBehaviour
                 transform.position = startPos;
             }
         }
-        
+    }
+
+    public void SpeedUp(int speed)
+    {
+        moveDeduct = speed;
     }
 }
