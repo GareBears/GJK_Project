@@ -9,6 +9,7 @@ public class Obstacles : MonoBehaviour
     public float despawnRange;
     private GameObject player;
     public float speedUp = 0;
+    GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +19,7 @@ public class Obstacles : MonoBehaviour
     public void Awake()
     {
         //moveDeduct = speedUp;
+        
         player = GameObject.Find("Player");
         playerPosZ = player.transform.position.z;
         despawnRange = playerPosZ - 10;
@@ -27,7 +29,6 @@ public class Obstacles : MonoBehaviour
     void Update()
     {
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - moveDeduct * Time.deltaTime);
-        
         if (transform.position.z < despawnRange)
         {
             Destroy(gameObject);

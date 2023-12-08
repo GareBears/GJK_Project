@@ -30,11 +30,14 @@ public class PlayerMovement : MonoBehaviour
     public GameObject life2;
     public GameObject life3;
 
+    Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
         characControl = GetComponent<CharacterController>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        animator = GetComponent<Animator>();
         life = 3;
     }
 
