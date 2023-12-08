@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
     public GameObject title;
     public GameObject end;
     public TMP_Text finalScore;
+    public GameObject startButton;
+    public GameObject endButton;
 
     public GameObject obstacle;
     GameObject prefabObject; 
@@ -57,6 +59,7 @@ public class GameManager : MonoBehaviour
             gameIsRunning = false;
             end.SetActive(true);
             finalScore.SetText("Score:" + score);
+            endButton.SetActive(true);
         }
 
         if (gameIsRunning)
@@ -101,5 +104,6 @@ public class GameManager : MonoBehaviour
     {
         gameIsRunning = true;
         title.SetActive(false);
+        startButton.SetActive(false);
     }
 }
