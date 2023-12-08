@@ -9,6 +9,8 @@ public class ObstacleSpawn : MonoBehaviour
     private float spawnPos;
     private float spawnAllowance;
 
+    public bool turbospawn = false;
+
     GameManager gameManager;
 
     // Start is called before the first frame update
@@ -23,8 +25,15 @@ public class ObstacleSpawn : MonoBehaviour
     {
         if (gameManager.gameIsRunning == true)
         {
-            spawnAllowance = Random.Range(0, 3);
-
+            if (turbospawn == false)
+            {
+                spawnAllowance = Random.Range(0, 3);
+            }
+            else if (turbospawn == true)
+            {
+                spawnAllowance = Random.Range(0, 2);
+            }
+            
             if (canSpawn == true)
             {
                 StartCoroutine(SpawnStuff());
@@ -46,15 +55,15 @@ public class ObstacleSpawn : MonoBehaviour
     {
         if (spawnPos == 0)
         {
-            Instantiate(obstacles[obToSpawn], new Vector3(-2.5f, 0, 100), obstacles[obToSpawn].transform.rotation);
+            Instantiate(obstacles[obToSpawn], new Vector3(-2.5f, -.5f, 125), obstacles[obToSpawn].transform.rotation);
         }
         else if (spawnPos == 1)
         {
-            Instantiate(obstacles[obToSpawn], new Vector3(0, 0, 100), obstacles[obToSpawn].transform.rotation);
+            Instantiate(obstacles[obToSpawn], new Vector3(0, -.5f, 125), obstacles[obToSpawn].transform.rotation);
         }
         else if (spawnPos == 2)
         {
-            Instantiate(obstacles[obToSpawn], new Vector3(2.5f, 0, 100), obstacles[obToSpawn].transform.rotation);
+            Instantiate(obstacles[obToSpawn], new Vector3(2.5f, -.5f, 125), obstacles[obToSpawn].transform.rotation);
         }
         
     }

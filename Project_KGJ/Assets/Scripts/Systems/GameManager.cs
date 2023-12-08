@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,13 +14,16 @@ public class GameManager : MonoBehaviour
     PlayerMovement playerMove;
     RepeatGround repeatGround;
     Obstacles obstacles;
+    ObstacleSpawn spawner;
 
     float currentTime;
     public int score;
     public float multiplier = 5;
 
     public TMP_Text text;
-    public TMP_Text scoretext;
+    public GameObject title;
+    public GameObject end;
+    public TMP_Text finalScore;
 
     public GameObject obstacle;
     GameObject prefabObject; 
@@ -31,6 +35,7 @@ public class GameManager : MonoBehaviour
         playerMove = player.GetComponent<PlayerMovement>();
         repeatGround = GameObject.Find("Ground").GetComponent<RepeatGround>();
         obstacles = obstacle.GetComponent<Obstacles>();
+        spawner = GameObject.Find("SpawnManager").GetComponent <ObstacleSpawn>();
         score = 0;
         if (obstacles.moveDeduct > 20)
         {
@@ -44,12 +49,14 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.O))
         {
             gameIsRunning = true;
-            
+            title.SetActive(false);
         }
         
         if (playerMove.life == 0)
         {
             gameIsRunning = false;
+            end.SetActive(true);
+            finalScore.SetText("Score:" + score);
         }
 
         if (gameIsRunning)
@@ -59,19 +66,23 @@ public class GameManager : MonoBehaviour
             text.text = score.ToString();
             TimeSpan time = TimeSpan.FromSeconds(currentTime);
 
-            if (score == 20)
+            if (score == 150)
             {
                 SpeedUp(.25f);
             }
-            if (score == 30)
+            if (score == 300)
             {
                 SpeedUp(.25f);
             }
-            if (score == 40)
+            if (score == 450)
+            {
+                SpeedUp(.25f);
+                spawner.turbospawn = true;
+            }
+            if (score == 600)
             {
                 SpeedUp(.25f);
             }
-
         }
     }
 
@@ -79,5 +90,16 @@ public class GameManager : MonoBehaviour
     {
         repeatGround.SpeedUp(speed);
         obstacles.SpeedUp(speed);
+    }
+
+    public void RestartGame(string scenename)
+    {
+        SceneManager.LoadScene(scenename);
+    }
+
+    public void Startgame()
+    {
+        gameIsRunning = true;
+        title.SetActive(false);
     }
 }

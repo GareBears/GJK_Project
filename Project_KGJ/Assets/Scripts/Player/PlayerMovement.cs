@@ -26,6 +26,10 @@ public class PlayerMovement : MonoBehaviour
 
     public float life;
 
+    public GameObject life1;
+    public GameObject life2;
+    public GameObject life3;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -72,6 +76,31 @@ public class PlayerMovement : MonoBehaviour
             x = Mathf.Lerp(x, NewXPos, Time.deltaTime * SpeedDodge);
             characControl.Move(moveVector);
             Jump();
+        }
+
+        if (gameManager.gameIsRunning == true)
+        {
+            life1.SetActive(true);
+            life2.SetActive(true);
+            life3.SetActive(true);
+        }
+        if (life == 2)
+        {
+            life1.SetActive(false);
+            life2.SetActive(true);
+            life3.SetActive(true);
+        }
+        if (life == 1)
+        {
+            life1.SetActive(false);
+            life2.SetActive(false);
+            life3.SetActive(true);
+        }
+        if(life == 0)
+        {
+            life1.SetActive(false);
+            life2.SetActive(false);
+            life3.SetActive(false);
         }
     }
     
